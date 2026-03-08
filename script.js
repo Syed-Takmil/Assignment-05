@@ -9,7 +9,7 @@ const OpenButton=document.getElementById("open-btn")
 const closedButton= document.getElementById("closed-btn")
   const Container = document.getElementById('card-container');
 
-
+const IssueCount=document.getElementById("issues-count")
 function LoadAllIssues(){
 fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
 .then((res)=>res.json())
@@ -18,8 +18,6 @@ fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     DisplayAllCards(json.data)
 })
 };
-
-
 
 
 function DisplayAllCards(issues){
@@ -70,6 +68,10 @@ function DisplayAllCards(issues){
     });
 }
 
+function UpdateCount(arr){
+    IssueCount.innerText=arr.length;
+}
+LoadAllIssues();
 function Toggle(id){
 AllButton.classList.remove('btn-primary')
 OpenButton.classList.remove('btn-primary')
@@ -77,16 +79,18 @@ closedButton.classList.remove('btn-primary')
 document.getElementById(id).classList.add('btn-primary');
 if(id==="all-btn"){
   DisplayAllCards(allIssues);
+  UpdateCount(allIssues);
 }
 else if(id==='closed-btn'){
     const closedIssues=allIssues.filter(issue=>issue.status==='closed')
     DisplayAllCards(closedIssues);
+    UpdateCount(closedIssues);
 }
 else{
     const openIssues=allIssues.filter(issue=>issue.status==='open')
 DisplayAllCards(openIssues)
+UpdateCount(openIssues);
 }
 }
 
-LoadAllIssues();
 Toggle('all-btn')
