@@ -14,13 +14,13 @@ function LoadAllIssues(){
 fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
 .then((res)=>res.json())
 .then((json)=>{
-    allIssues.push(json)
+    allIssues=(json.data)
     DisplayAllCards(json.data)
 })
 };
-// Filter
-const openIssues=allIssues.filter(issue=>issue.status==='open')
-const closedIssue=allIssues.filter(issue=>issue.status==='closed')
+
+
+
 
 function DisplayAllCards(issues){
   Container.innerHTML=""
@@ -75,15 +75,18 @@ AllButton.classList.remove('btn-primary')
 OpenButton.classList.remove('btn-primary')
 closedButton.classList.remove('btn-primary')
 document.getElementById(id).classList.add('btn-primary');
-if(id="all-btn"){
-   LoadAllIssues();
+if(id==="all-btn"){
+  DisplayAllCards(allIssues);
 }
-else if(id='closed-btn'){
-    DisplayAllCards(openIssues);
+else if(id==='closed-btn'){
+    const closedIssues=allIssues.filter(issue=>issue.status==='closed')
+    DisplayAllCards(closedIssues);
 }
 else{
-DisplayAllCards(closedIssue)
+    const openIssues=allIssues.filter(issue=>issue.status==='open')
+DisplayAllCards(openIssues)
 }
 }
 
+LoadAllIssues();
 Toggle('all-btn')
