@@ -53,14 +53,14 @@
 </div>
 
 <!-- Buttons -->
- <div class="button-container bg-[#FFFFFF] w-[85%] mx-auto flex gap-2 p-6 mb-4">
-<div class="btn" id="all-btn" onclick="Toggle('all-btn')">All</div>
-<div class="btn" id="open-btn" onclick="Toggle('open-btn')">Open</div>
-<div class="btn" id="closed-btn" onclick="Toggle('closed-btn')">Closed</div>
+ <div class="button-container bg-[#FFFFFF] w-[85%] mx-auto flex gap-2 p-6 mb-4 shadow-sm">
+<div class="btn w-[100px]" id="all-btn" onclick="Toggle('all-btn')">All</div>
+<div class="btn w-[100px]" id="open-btn" onclick="Toggle('open-btn')">Open</div>
+<div class="btn w-[100px]" id="closed-btn" onclick="Toggle('closed-btn')">Closed</div>
  </div>
 
 <!-- Issues Count Section -->
- <section class="flex flex-col sm:flex-row  justify-between bg-[#FFFFFF] w-[85%] mx-auto p-6 items-center gap-4 ">
+ <section class="flex flex-col sm:flex-row  justify-between bg-[#FFFFFF] w-[85%] mx-auto p-6 items-center gap-4 shadow-sm ">
 
     <div class="issue-count flex  items-center gap-2 ">
 <div class="bg-[#ECE4FF] rounded-full p-2"><img src="assets/Aperture.png" alt=""></div>
@@ -80,6 +80,13 @@
     </div>
 
     
+ </section>
+
+
+ <!-- ALL Cards Section -->
+ <section id="card-container" class=" w-[85%] mx-auto p-6 grid grid-cols-2 gap-3 md:grid-cols-4 ">
+
+
  </section>
  
  <script src="script.js"></script>
