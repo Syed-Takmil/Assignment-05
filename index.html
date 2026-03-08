@@ -29,6 +29,7 @@
     
     <!-- LogIn Page -->
      <div class="login-section w-full bg-base-[#F8FAFC] ">
+
          <div class=" bg-base-100 border-base-300 rounded-box max-w-[350px] border p-8 mx-auto my-[45px] space-y-2 shadow-md">
   
 <div class="logo grid justify-items-center space-y-[24px]
@@ -39,13 +40,14 @@
        <span class=" font-regular text-[16px] text-[#64748B]"> Sign in to manage your issues</span>
     </div>
 </div>
+<p id="error-msg" class="text-red-500 text-sm"></p>
   <label class="label text-[16px] font-medium text-[#1F2937]">Username</label> <br>
-  <input type="email" class="input" placeholder="Enter Username" />
+  <input type="text" class="input" id="username-input" placeholder="Enter Username" />
 
   <label class="label text-[16px] font-medium text-[#1F2937]">Enter Password</label>
-  <input type="password" class="input" placeholder="Password" />
+  <input type="password" id="password-input" class="input" placeholder="Password" />
 
-  <button class="btn btn-primary mt-4 w-full">Sign in</button>
+  <button class="btn btn-primary mt-4 w-full" id="sign-in-btn">Sign in</button>
      <div class="flex items-center w-full my-6">
         <div class="border-t border-[#E4E4E7] flex-grow"></div>
         <span class="mx-4 text-gray-500"> OR</span>
@@ -60,9 +62,8 @@
     </div>
    </div>
     </div>
-
- 
      </div>
+     <script src="Login.js"></script>
    
 </body>
 </html>
