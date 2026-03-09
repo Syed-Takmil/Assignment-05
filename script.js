@@ -11,6 +11,8 @@ const closedButton= document.getElementById("closed-btn")
 
   const Spinner=document.getElementById('Spinner');
 const IssueCount=document.getElementById("issues-count")
+const SearchText=document.getElementById('search-input')
+const SearchBtn=document.getElementById('search-btn')
 
 const ManageSpinner=(status)=>{
     if(status){
@@ -124,3 +126,18 @@ document.addEventListener("DOMContentLoaded", () => {
   LoadAllIssues();
   Toggle('all-btn');
 });
+
+SearchBtn.addEventListener("click",()=>{
+  
+        const value=SearchText.value.trim().toLowerCase();
+        Search(value)
+    
+})
+const Search=(value)=>{
+
+   const FilterIssues=allIssues.filter(issue=>issue.title.toLowerCase().includes(value)
+||issue.description.toLowerCase().includes(value));
+  DisplayAllCards(FilterIssues)
+  UpdateCount(FilterIssues)
+
+}
