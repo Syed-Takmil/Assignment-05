@@ -9,13 +9,28 @@ const OpenButton=document.getElementById("open-btn")
 const closedButton= document.getElementById("closed-btn")
   const Container = document.getElementById('card-container');
 
+  const Spinner=document.getElementById('Spinner');
 const IssueCount=document.getElementById("issues-count")
+
+const ManageSpinner=(status)=>{
+    if(status){
+        Spinner.classList.remove('hidden');
+        Container.classList.add('hidden');
+    }
+    else{
+Spinner.classList.add('hidden')
+        Container.classList.remove('hidden')
+    }
+}
+
 function LoadAllIssues(){
+    ManageSpinner(true)
 fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
 .then((res)=>res.json())
 .then((json)=>{
     allIssues=(json.data)
     DisplayAllCards(json.data)
+    UpdateCount(allIssues)
 })
 };
 
@@ -25,14 +40,23 @@ function DisplayAllCards(issues){
 
     issues.forEach(issue => {
         const card = document.createElement('div');
-        
+        let Color;
+        if(issue.priority.toLowerCase()==='high'){
+            Color='text-[#EF4444] bg-[#FEECEC]'
+        }
+        else if(issue.priority.toLowerCase()==='medium'){
+            Color='bg-[#FFF6D1] text-[#F59E0B]'
+        }
+        else{
+            Color='text-[#9CA3AF] bg-[#EEEFF2]'
+        }
         card.innerHTML = `
         <div class="card border-t-5 w-full h-full shadow-sm ${issue.status === 'open' ? 'border-green-600' : 'border-purple-600'} p-4 space-y-3">
 
            
             <div class="flex justify-between items-center">
                 <img src="${issue.status === 'open' ? 'assets/Open-Status.png' : 'assets/Closed- Status .png'}" alt="${issue.status} status" class="w-5 h-5">
-                <div class="btn rounded-[100px] text-[#EF4444] bg-[#FEECEC] p-2 text-[12px] font-medium w-[80px] text-center">
+                <div class="btn rounded-[100px] ${Color} p-2 text-[12px] font-medium w-[80px] text-center">
                     ${issue.priority.toUpperCase()}
                 </div>
             </div>
@@ -66,12 +90,15 @@ function DisplayAllCards(issues){
 
         Container.append(card);
     });
+    ManageSpinner(false)
 }
+
+
 
 function UpdateCount(arr){
     IssueCount.innerText=arr.length;
 }
-LoadAllIssues();
+
 function Toggle(id){
 AllButton.classList.remove('btn-primary')
 OpenButton.classList.remove('btn-primary')
@@ -93,4 +120,7 @@ UpdateCount(openIssues);
 }
 }
 
-Toggle('all-btn')
+document.addEventListener("DOMContentLoaded", () => {
+  LoadAllIssues();
+  Toggle('all-btn');
+});
