@@ -90,7 +90,7 @@ ModalBox.innerHTML=`
     >
 <div class="grid grid-rows-2 ">
     <span class="text-[16px] text-[#64748B]">Assignee:</span>
-<span class="text-[16px] font-semibold ">${data.assignee.toUpperCase()}</span>
+<span class="text-[16px] font-semibold ">${(data.assignee==="")?"No Assignees":data.assignee.toUpperCase()}</span>
 </div>
 <div class="grid grid-rows-2">
     <span class="text-[16px] text-[#64748B]">Priority:</span>
