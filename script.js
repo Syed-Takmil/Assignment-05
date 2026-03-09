@@ -35,7 +35,75 @@ fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     UpdateCount(allIssues)
 })
 };
-
+function LoadDetails(id){
+    const link=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    fetch(link)
+    .then(res=>res.json())
+    .then((json)=>DisplayModal(json.data))
+}
+const DisplayModal=(data)=>{
+    let Color;
+        if(data.priority.toLowerCase()==='high'){
+            Color='text-[#FFFFFF] bg-[#EF4444]'
+        }
+        else if(data.priority.toLowerCase()==='medium'){
+            Color='bg-[#FFF6D1] text-[#F59E0B]'
+        }
+        else{
+            Color='text-[#9CA3AF] bg-[#EEEFF2]'
+        }
+const ModalBox=document.getElementById('my_modal_5')
+let statusColor;
+if(data.status==='open'){
+    statusColor='bg-[#00A96E]'
+}
+else{
+    statusColor='bg-purple-600'
+}
+  
+ModalBox.innerHTML=`
+<div class="modal-box p-8 grid space-y-4">
+    <h3 class="text-[24px] font-bold mb-2">${data.title}</h3>
+       <div class="labels flex flex-wrap gap-2 pb-2">
+                ${data.labels.map(label => `
+                    <div class="btn rounded-full flex items-center gap-1 px-2 py-1 text-[12px] font-medium
+                        ${label.toLowerCase() === 'bug' 
+                            ? 'bg-[#FEECEC] text-[#EF4444]' 
+                            : 'bg-[#FFF8DB] text-[#D97706]'}">
+                        ${label.toLowerCase() === 'bug' 
+                            ? '<i class="fa-solid fa-bug"></i>' 
+                            : '<img src="assets/Vector.png" class="w-3 h-3" alt="label icon"/>'}
+                        ${label.toUpperCase()}
+                    </div>
+                `).join('')}
+            </div>
+   <div class="flex  justify-start items-center">
+     <div class="rounded-[100px] ${statusColor} text-[#FFFFFF] text-[12px] font-medium p-2">${data.status.toUpperCase()}</div>
+    <ul class='list-disc pl-6'>
+        <li class="text-[#64748B] text-[12px]">Opened by ${data.author.toUpperCase()}</li></ul>
+        <ul class='list-disc pl-6'></ul>
+        <li class="text-[#64748B] text-[12px]">22/02/2026</li>
+    </ul>
+   </div>
+    <p class="py-4 text-[16px] text-[#64748B]">${data.description}.</p>
+    <div class="p-4 bg-[#F8FAFC] flex justify-between rounded-[8px] "
+    >
+<div class="grid grid-rows-2 ">
+    <span class="text-[16px] text-[#64748B]">Assignee:</span>
+<span class="text-[16px] font-semibold ">${data.assignee.toUpperCase()}</span>
+</div>
+<div class="grid grid-rows-2">
+    <span class="text-[16px] text-[#64748B]">Priority:</span>
+<span class="rounded-[100px] ${Color} text-[12px] font-medium p-2 flex justify-center">${data.priority.toUpperCase()}</span></div>
+</div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn btn-primary">Close</button>
+      </form>
+    </div>
+  </div>`
+  ModalBox.showModal();
+}
 
 function DisplayAllCards(issues){
   Container.innerHTML=""
@@ -53,7 +121,8 @@ function DisplayAllCards(issues){
             Color='text-[#9CA3AF] bg-[#EEEFF2]'
         }
         card.innerHTML = `
-        <div class="card border-t-5 w-full h-full shadow-sm ${issue.status === 'open' ? 'border-green-600' : 'border-purple-600'} p-4 space-y-3">
+        <div onclick="LoadDetails(${issue.id})"
+        class="card border-t-5 w-full h-full shadow-sm ${issue.status === 'open' ? 'border-green-600' : 'border-purple-600'} p-4 space-y-3">
 
            
             <div class="flex justify-between items-center">
@@ -133,6 +202,12 @@ SearchBtn.addEventListener("click",()=>{
         Search(value)
     
 })
+SearchText.addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){
+        const value = SearchText.value.trim().toLowerCase();
+        Search(value);
+    }
+});
 const Search=(value)=>{
 
    const FilterIssues=allIssues.filter(issue=>issue.title.toLowerCase().includes(value)

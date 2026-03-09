@@ -8,8 +8,8 @@ const SignButton=document.getElementById('sign-in-btn');
 const errorMsg=document.getElementById('error-msg');
 
 SignButton.addEventListener('click',()=>{
-const username=userInput.value;
-const password=passwordInput.value;
+const username=userInput.value.trim();
+const password=passwordInput.value.trim();
 
     if(username==='admin' && password==='admin123'){
         alert("LogIn Successful");
